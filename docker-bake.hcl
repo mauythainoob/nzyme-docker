@@ -26,3 +26,4 @@ target "nzyme-node" {
     platforms  = ["linux/amd64"]
     tags = ["nzyme-node:latest"]
 }
+

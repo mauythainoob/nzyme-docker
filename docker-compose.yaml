@@ -1,4 +1,3 @@
-version: '3'
 services:
   postgres:
     image: postgres:14
@@ -17,12 +16,12 @@ services:
       interval: 10s
       retries: 5
 
-  nzyme_tap:
-    image: nzyme-tap:latest
-    environment:
-      TAP_SECRET_KEY: ${TAP_SECRET_KEY}
-    volumes:
-      - ./nzyme-tap/start.sh:/tmp/start.sh
+  # nzyme_tap:
+  #   image: nzyme-tap:latest
+  #   environment:
+  #     TAP_SECRET_KEY: ${TAP_SECRET_KEY}
+  #   volumes:
+  #     - ./nzyme-tap/start.sh:/tmp/start.sh
 
   nzyme_node:
     image: nzyme-node:latest
