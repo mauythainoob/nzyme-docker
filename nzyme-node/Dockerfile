@@ -11,7 +11,7 @@ WORKDIR /tmp
 
 # TODO: Remove download from /tmp as it uses memory
 RUN apt update && \ 
-    apt install -y wget curl openjdk-11-jre-headless postgresql-client && \
+    apt install -y wget openjdk-11-jre-headless postgresql-client && \
     wget ${DOWNLOAD_TARGET} && \ 
     ls | grep '.deb' | xargs dpkg -i
  

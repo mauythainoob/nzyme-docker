@@ -1,1 +1,4 @@
 - [ ] Apply resource limits to nzyme-node; this fucker is taking a lot of space.
+- [ ] Get tap running. 
+- [ ] Figure out networking; will an external NIC be able to communicate with docker? 
+- [ ] Security within the containers... 
