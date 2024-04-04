@@ -2,3 +2,6 @@
 - [ ] Get tap running. 
 - [ ] Figure out networking; will an external NIC be able to communicate with docker? 
 - [ ] Security within the containers... 
+
+
+- [ ] Nzyme-node doesn't come back up once it's been initially deployed. 
