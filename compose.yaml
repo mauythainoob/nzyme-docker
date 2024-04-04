@@ -1,0 +1,42 @@
+version: '3'
+services:
+  postgres:
+    image: postgres:14
+    restart: always
+    environment:
+      - NZYME_POSTGRES_DB=${NZYME_POSTGRES_DB}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+    ports:
+      - "${POSTGRES_PORT}:${POSTGRES_PORT}" 
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./postgres/init.sql:/docker-entrypoint-initdb.d/init.sql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER}"]
+      interval: 10s
+      retries: 5
+
+  nzyme_tap:
+    image: nzyme-tap:latest
+    environment:
+      TAP_SECRET_KEY: ${TAP_SECRET_KEY}
+    volumes:
+      - ./nzyme-tap/start.sh:/tmp/start.sh
+
+  nzyme_node:
+    image: nzyme-node:latest
+    restart: always
+    ports:
+      - "22900:22900"
+    environment:
+      POSTGRES_HOST: ${POSTGRES_HOST}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_PORT: ${POSTGRES_PORT}
+    links:
+      - postgres
+    volumes:
+      - ./nzyme-node/start.sh:/tmp/start.sh
+
+volumes:
+  postgres_data:

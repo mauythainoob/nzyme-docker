@@ -1,0 +1,3 @@
+GRANT ALL PRIVILEGES ON DATABASE nzyme TO nzyme;
+
+
