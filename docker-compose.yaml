@@ -3,14 +3,17 @@ services:
     image: postgres:14
     restart: always
     environment:
+      # Passing the db name automatically create it for us
       - NZYME_POSTGRES_DB=${NZYME_POSTGRES_DB}
       - POSTGRES_USER=${POSTGRES_USER}
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
     ports:
       - "${POSTGRES_PORT}:${POSTGRES_PORT}" 
     volumes:
-      - postgres_data:/var/lib/postgresql/data
+      # - postgres_data:/var/lib/postgresql/data
       - ./postgres/init.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - nzyme_network
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER}"]
       interval: 10s
@@ -19,9 +22,12 @@ services:
   # nzyme_tap:
   #   image: nzyme-tap:latest
   #   environment:
-  #     TAP_SECRET_KEY: ${TAP_SECRET_KEY}
+  #     - TAP_SECRET_KEY=${TAP_SECRET_KEY}
   #   volumes:
   #     - ./nzyme-tap/start.sh:/tmp/start.sh
+  #   cap_add:
+  #     - NET_ADMIN
+  #   network_mode: host
 
   nzyme_node:
     image: nzyme-node:latest
@@ -29,13 +35,25 @@ services:
     ports:
       - "22900:22900"
     environment:
-      POSTGRES_HOST: ${POSTGRES_HOST}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
-      POSTGRES_PORT: ${POSTGRES_PORT}
-    links:
-      - postgres
+      - NZYME_POSTGRES_DB=${NZYME_POSTGRES_DB}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_PORT=${POSTGRES_PORT}
+      - POSTGRES_HOST=${POSTGRES_HOST}
+      - NZYME_PORT=${NZYME_PORT}
+      - NZYME_URI=${NZYME_URI}
+      - NZYME_NODE_NAME=${NZYME_NODE_NAME}
+    networks:
+      - nzyme_network
     volumes:
-      - ./nzyme-node/start.sh:/tmp/start.sh
+      - ./nzyme_node/nzyme.conf.template:/etc/nzyme/nzyme.conf.template
+      - ./nzyme_node/start.sh:/tmp/start.sh
+      # - nzyme_node_id_volume:/usr/share/nzyme/node_id
 
 volumes:
   postgres_data:
+  nzyme_node_id_volume:
+
+networks:
+  nzyme_network:
+    driver: bridge

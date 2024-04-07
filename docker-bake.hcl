@@ -1,5 +1,5 @@
-target "nzyme-tap" {
-    context = "nzyme-tap"
+target "nzyme_tap" {
+    context = "nzyme_tap"
     dockerfile = "Dockerfile"
     contexts = {
         base_image = "docker-image://ubuntu:22.04"
@@ -12,8 +12,8 @@ target "nzyme-tap" {
     tags = ["nzyme-tap:latest"]
 }
 
-target "nzyme-node" {
-    context = "nzyme-node"
+target "nzyme_node" {
+    context = "nzyme_node"
     dockerfile = "Dockerfile"
     contexts = {
         base_image = "docker-image://ubuntu:22.04"

@@ -13,3 +13,7 @@ First create the nzyme components using the docker bake.
 
 ## Start scripts 
 These are deploy time configurations. 
+
+### Notes:
+
+- There is currently no way to disable MFA.
