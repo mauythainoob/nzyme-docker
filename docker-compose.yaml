@@ -10,7 +10,7 @@ services:
     ports:
       - "${POSTGRES_PORT}:${POSTGRES_PORT}" 
     volumes:
-      # - postgres_data:/var/lib/postgresql/data
+      - postgres_data:/var/lib/postgresql/data
       - ./postgres/init.sql:/docker-entrypoint-initdb.d/init.sql
     networks:
       - nzyme_network
@@ -31,9 +31,13 @@ services:
 
   nzyme_node:
     image: nzyme-node:latest
-    restart: always
+    restart_policy:
+      condition: on-failure
+      delay: 5s
+      max_attempts: 5
+      window: 10s
     ports:
-      - "22900:22900"
+      - "${NZYME_PORT}:${NZYME_PORT}"
     environment:
       - NZYME_POSTGRES_DB=${NZYME_POSTGRES_DB}
       - POSTGRES_USER=${POSTGRES_USER}
@@ -48,7 +52,8 @@ services:
     volumes:
       - ./nzyme_node/nzyme.conf.template:/etc/nzyme/nzyme.conf.template
       - ./nzyme_node/start.sh:/tmp/start.sh
-      # - nzyme_node_id_volume:/usr/share/nzyme/node_id
+      - ./nzyme_node/node_id:/usr/share/nzyme/node_id
+      - nzyme_node_id_volume:/usr/share/nzyme/crypto
 
 volumes:
   postgres_data:

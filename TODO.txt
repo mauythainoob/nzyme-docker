@@ -1,6 +1,0 @@
-- [ ] Apply resource limits to nzyme-node; this fucker is taking a lot of space.
-- [ ] Get tap running. 
-- [ ] Figure out networking; will an external NIC be able to communicate with docker? 
-- [ ] Security within the containers... 
-- [ ] Add config to increase the heap size if crashes occur (https://docs.nzyme.org/getting-started/installation/ubuntu-server-2204/#configure-nzymeconf)
-- [X] Nzyme-node doesn't come back up once it's been initially deployed. 
