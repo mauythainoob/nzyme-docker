@@ -1,3 +1,11 @@
+group "nzyme_nodes_all" {
+  targets = ["nzyome_node_v2a9", "nzyome_node_v2a10"]
+}
+
+variable NODE_DOCKER_IMAGE_NAME { 
+    default = "nzome-node"
+}
+
 target "nzyme_tap" {
     context = "nzyme_tap"
     dockerfile = "Dockerfile"
@@ -12,7 +20,7 @@ target "nzyme_tap" {
     tags = ["nzyme-tap:latest"]
 }
 
-target "nzyme_node" {
+target "_nzyme_node" {
     context = "nzyme_node"
     dockerfile = "Dockerfile"
     contexts = {
@@ -24,6 +32,22 @@ target "nzyme_node" {
     }
     ssh = ["default"]
     platforms  = ["linux/amd64"]
-    tags = ["nzyme-node:latest"]
+    
+}
+
+target "nzyome_node_v2a9" { 
+    inherits = ["_nzyme_node"]
+    args = {
+        DOWNLOAD_TARGET = "https://github.com/nzymedefense/nzyme/releases/download/2.0.0-alpha.9/nzyme-node_2.0.0-alpha.9.deb"
+    }
+    tags = ["${NODE_DOCKER_IMAGE_NAME}:v2a9"]
+}
+
+target "nzyome_node_v2a10" { 
+    inherits = ["_nzyme_node"]
+    args = {
+        DOWNLOAD_TARGET = "https://github.com/nzymedefense/nzyme/releases/download/2.0.0-alpha.10/nzyme-node_2.0.0-alpha.10.deb"
+    }
+    tags = ["${NODE_DOCKER_IMAGE_NAME}:v2a10"]
 }
 
