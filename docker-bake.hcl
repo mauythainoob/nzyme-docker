@@ -1,9 +1,9 @@
-group "nzyme_nodes_all" {
+group "all_nzyme_nodes" {
   targets = ["nzyome_node_v2a9", "nzyome_node_v2a10"]
 }
 
 variable NODE_DOCKER_IMAGE_NAME { 
-    default = "nzome-node"
+    default = "nzyme-node"
 }
 
 target "nzyme_tap" {
@@ -28,7 +28,6 @@ target "_nzyme_node" {
     }
     args = {       
         PORT = 22900 
-        DOWNLOAD_TARGET = "https://github.com/nzymedefense/nzyme/releases/download/2.0.0-alpha.10/nzyme-node_2.0.0-alpha.10.deb"
     }
     ssh = ["default"]
     platforms  = ["linux/amd64"]

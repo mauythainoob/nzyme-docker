@@ -30,7 +30,7 @@ services:
   #   network_mode: host
 
   nzyme_node:
-    image: nzyme-node:latest
+    image: nzyme-node:v2a10
     restart: on-failure
     ports:
       - "${NZYME_PORT}:${NZYME_PORT}"
