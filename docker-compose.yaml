@@ -31,11 +31,7 @@ services:
 
   nzyme_node:
     image: nzyme-node:latest
-    restart_policy:
-      condition: on-failure
-      delay: 5s
-      max_attempts: 5
-      window: 10s
+    restart: on-failure
     ports:
       - "${NZYME_PORT}:${NZYME_PORT}"
     environment:
@@ -53,11 +49,11 @@ services:
       - ./nzyme_node/nzyme.conf.template:/etc/nzyme/nzyme.conf.template
       - ./nzyme_node/start.sh:/tmp/start.sh
       - ./nzyme_node/node_id:/usr/share/nzyme/node_id
-      - nzyme_node_id_volume:/usr/share/nzyme/crypto
+      - nzyme_node_keys:/usr/share/nzyme/crypto
 
 volumes:
   postgres_data:
-  nzyme_node_id_volume:
+  nzyme_node_keys:
 
 networks:
   nzyme_network:
