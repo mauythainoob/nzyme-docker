@@ -4,14 +4,21 @@ FROM base_image
 ARG PORT
 ARG DOWNLOAD_TARGET
 # Not from bake file...
-ARG NZYME_DEB_FILE=/tmp/nzyme_install.deb
+ARG NZYME_DEB_FILE=/tmp/nzyme_node_install.deb
 
 # Do this otherwise 'apt install' hangs
 ENV DEBIAN_FRONTEND=noninteractive 
 
 WORKDIR /tmp
 RUN apt update && \ 
-    apt install -y curl openjdk-11-jre-headless postgresql-client wireless-tools procps usbutils gettext moreutils && \
+    apt install -y \ 
+        curl \ 
+        openjdk-11-jre-headless \ 
+        postgresql-client wireless-tools \ 
+        procps \ 
+        usbutils \ 
+        gettext \
+        moreutils && \
     curl -L ${DOWNLOAD_TARGET} > ${NZYME_DEB_FILE} && \ 
     dpkg -i ${NZYME_DEB_FILE} && \
     # remove file as tmp uses memory and deleting the file frees up image size

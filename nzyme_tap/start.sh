@@ -1,29 +1,26 @@
 #!/bin/bash
-printenv
-TAP_SECRET_KEY=TSTnzggmliXnLWQKqcLHxycl2cLbf4IZve0v8f2gPKbSBfCLzp2Wug50SaTrFFGk
 if [ -z "$TAP_SECRET_KEY" ]; then
     echo "TAP_SECRET_KEY environment variable is not set or empty. Exiting."
     exit 1
 fi
 
-echo "[+] Setting up config."
+echo "---------- Starting nzyme tap -----------"
 
 config_file=/etc/nzyme/nzyme-tap.conf
-backup_of_original_config_file=/etc/nzyme/nzyme-tap.conf.backup
+envsubst < /etc/nzyme/nzyme-tap.conf.template > $config_file
 
-# Create a backup of the original config. 
-if [ ! -e "$backup_of_original_config_file" ]; then 
-    cp $config_file $backup_of_original_config_file
-fi 
+# # Check if the montap interface does not exist
+# if ! ip link show montap > /dev/null 2>&1; then
+#     # If montap doesn't exist, proceed with the setup
+#     ip link set dev wlan1 down
+#     ip link set wlan1 name montap
+#     iw dev montap interface add wlan1 type managed
 
-# We want reset the config to the original because, once we change the default conf files, 
-# sed can no longer find them and up new files aren't updated.
-cat "$backup_of_original_config_file" > "$config_file"
+#     ip link set dev montap down
+#     iw dev montap set type monitor
+#     ip link set dev montap up
+# else
+#     echo "The montap interface already exists. No changes made."
+# fi
 
-
-sed -i "s|your_key_copied_from_nzyme_web_interface|$TAP_SECRET_KEY|" $config_file
-sed -i 's!https://nzyme.example.org:22900/!https://0.0.0.0:22900!g' $config_file
-
-cat $config_file
-
-/usr/bin/nzyme-tap --configuration-file /etc/nzyme/nzyme-tap.conf --log-level info
+/usr/bin/nzyme-tap --configuration-file $config_file --log-level $LOG_LEVEL

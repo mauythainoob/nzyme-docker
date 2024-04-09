@@ -19,15 +19,22 @@ services:
       interval: 10s
       retries: 5
 
-  # nzyme_tap:
-  #   image: nzyme-tap:latest
-  #   environment:
-  #     - TAP_SECRET_KEY=${TAP_SECRET_KEY}
-  #   volumes:
-  #     - ./nzyme-tap/start.sh:/tmp/start.sh
-  #   cap_add:
-  #     - NET_ADMIN
-  #   network_mode: host
+  nzyme_tap:
+    image: nzyme-tap:v2a10
+    environment:
+      - TAP_SECRET_KEY=${TAP_SECRET_KEY}
+      - ACCEPT_INSECURE_CERTS=${ACCEPT_INSECURE_CERTS}
+      - TCP_PROTOCOL_PIPELINE_SIZE=${TCP_PROTOCOL_PIPELINE_SIZE}
+      - TCP_PROTOCOL_SESSION_TIMEOUT_IN_SECONDS=${TCP_PROTOCOL_SESSION_TIMEOUT_IN_SECONDS}
+      - LOG_LEVEL=${LOG_LEVEL}
+      - NZYME_URI=${NZYME_URI}
+    volumes:
+      - ./nzyme_tap/nzyme-tap.conf.template:/etc/nzyme/nzyme-tap.conf.template
+      - ./nzyme_tap/start.sh:/tmp/start.sh
+    cap_add:
+      - NET_ADMIN
+    networks:
+      - nzyme_network
 
   nzyme_node:
     image: nzyme-node:v2a10
