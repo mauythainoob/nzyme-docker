@@ -64,6 +64,8 @@ services:
       - NZYME_PORT=${NZYME_PORT}
       - NZYME_URI=${NZYME_URI}
       - NZYME_NODE_NAME=${NZYME_NODE_NAME}
+      - INITIAL_HEAP_SIZE_IN_GB=${INITIAL_HEAP_SIZE_IN_GB}
+      - MAX_HEAP_SIZE_IN_GB=${MAX_HEAP_SIZE_IN_GB}
     volumes:
       - ./nzyme_node/nzyme.conf.template:/etc/nzyme/nzyme.conf.template
       - ./nzyme_node/start.sh:/tmp/start.sh
