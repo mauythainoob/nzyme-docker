@@ -20,6 +20,17 @@ services:
 
   nzyme_tap:
     image: nzyme-tap:v2a12
+    network_mode: host
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 2GB
+        reservations:
+          cpus:  '0.25'
+          memory: 1GB
+    cap_add:
+      - NET_ADMIN
     environment:
       - TAP_SECRET_KEY=${TAP_SECRET_KEY}
       - ACCEPT_INSECURE_CERTS=${ACCEPT_INSECURE_CERTS}
@@ -30,15 +41,20 @@ services:
     volumes:
       - ./nzyme_tap/nzyme-tap.conf.template:/etc/nzyme/nzyme-tap.conf.template
       - ./nzyme_tap/start.sh:/tmp/start.sh
-    cap_add:
-      - NET_ADMIN
-    network_mode: host
+
 
   nzyme_node:
     image: nzyme-node:v2a12
+    network_mode: host
     restart: on-failure
-    ports:
-      - "${NZYME_PORT}:${NZYME_PORT}"
+    deploy:
+      resources:
+        limits:
+          cpus: '1'
+          memory: 4GB
+        reservations:
+          cpus:  '0.5'
+          memory: 2GB
     environment:
       - NZYME_POSTGRES_DB=${NZYME_POSTGRES_DB}
       - POSTGRES_USER=${POSTGRES_USER}
@@ -48,7 +64,6 @@ services:
       - NZYME_PORT=${NZYME_PORT}
       - NZYME_URI=${NZYME_URI}
       - NZYME_NODE_NAME=${NZYME_NODE_NAME}
-    network_mode: host
     volumes:
       - ./nzyme_node/nzyme.conf.template:/etc/nzyme/nzyme.conf.template
       - ./nzyme_node/start.sh:/tmp/start.sh
