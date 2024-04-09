@@ -69,6 +69,7 @@ target "_nzyme_tap" {
         base_image = "docker-image://ubuntu:22.04"
     }
     args = {       
+        PORT = 22900 
         # What you'll need to update
         DOWNLOAD_TARGET = ""
     }

@@ -29,4 +29,5 @@ RUN apt update && \
     # remove file as tmp uses memory and deleting the file frees up image size
     rm ${NZYME_DEB_FILE}
  
+WORKDIR /
 CMD ["sh", "/tmp/start.sh"]

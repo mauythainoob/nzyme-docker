@@ -12,15 +12,14 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data
       - ./postgres/init.sql:/docker-entrypoint-initdb.d/init.sql
-    networks:
-      - nzyme_network
+    network_mode: host
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER}"]
       interval: 10s
       retries: 5
 
   nzyme_tap:
-    image: nzyme-tap:v2a10
+    image: nzyme-tap:v2a12
     environment:
       - TAP_SECRET_KEY=${TAP_SECRET_KEY}
       - ACCEPT_INSECURE_CERTS=${ACCEPT_INSECURE_CERTS}
@@ -33,11 +32,10 @@ services:
       - ./nzyme_tap/start.sh:/tmp/start.sh
     cap_add:
       - NET_ADMIN
-    networks:
-      - nzyme_network
+    network_mode: host
 
   nzyme_node:
-    image: nzyme-node:v2a10
+    image: nzyme-node:v2a12
     restart: on-failure
     ports:
       - "${NZYME_PORT}:${NZYME_PORT}"
@@ -50,8 +48,7 @@ services:
       - NZYME_PORT=${NZYME_PORT}
       - NZYME_URI=${NZYME_URI}
       - NZYME_NODE_NAME=${NZYME_NODE_NAME}
-    networks:
-      - nzyme_network
+    network_mode: host
     volumes:
       - ./nzyme_node/nzyme.conf.template:/etc/nzyme/nzyme.conf.template
       - ./nzyme_node/start.sh:/tmp/start.sh
@@ -61,7 +58,3 @@ services:
 volumes:
   postgres_data:
   nzyme_node_keys:
-
-networks:
-  nzyme_network:
-    driver: bridge

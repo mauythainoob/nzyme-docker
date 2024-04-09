@@ -3,8 +3,12 @@ leader_secret = "${TAP_SECRET_KEY}"
 leader_uri = "${NZYME_URI}"
 accept_insecure_certs = $ACCEPT_INSECURE_CERTS
 
-[ethernet_interfaces.eth0]
+[wifi_interfaces.wlo1]
 active = true
+channels_2g = [2, 3, 4, 5, 7, 8, 9, 10, 12, 13]
+channels_5g = [36, 40, 44, 48, 52, 56, 60, 64]
+channels_6g = []
+
 
 [performance]
 ethernet_brokers = 1
