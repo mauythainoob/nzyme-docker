@@ -3,10 +3,13 @@ leader_secret = "${TAP_SECRET_KEY}"
 leader_uri = "${NZYME_URI}"
 accept_insecure_certs = $ACCEPT_INSECURE_CERTS
 
-[wifi_interfaces.wlo1]
+
+# Insert your interface details here... 
+# Example below
+[wifi_interfaces.wlx00c0ca9789fb]
 active = true
-channels_2g = [2, 3, 4, 5, 7, 8, 9, 10, 12, 13]
-channels_5g = [36, 40, 44, 48, 52, 56, 60, 64]
+channels_2g = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13]
+channels_5g = []
 channels_6g = []
 
 
