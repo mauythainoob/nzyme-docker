@@ -17,12 +17,13 @@ jobs:
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
-          
+
       - name: Build and push
         uses: docker/bake-action@v4
         env:
           GITHUB_REPOSITORY_OWNER: ${{ github.repository_owner }}
         with:
           push: true
+          targets: all_nzyme_nodes
           files: |
             ./docker-bake.hcl
