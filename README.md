@@ -23,6 +23,9 @@ Reading 'todo' in Github Repo projects.
 2. Ammend values in .env file. 
 3. Run `docker-compose up -d`. 
 
+#### Nzyme tap config 
+You can auto generate `nzyme-tap` configuration using the `generate_tap_conf.sh` script. Run this script against machine that will run `nzyme-tap` and ensure the adapters are connected.
+
 ## Notes:
 
 - There is currently no way to disable MFA.
