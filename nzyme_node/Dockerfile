@@ -23,4 +23,4 @@ RUN apt update && \
  
 WORKDIR /
 EXPOSE ${PORT}
-CMD ["sh", "/tmp/start.sh"]
+CMD ["sh", "/etc/nzyme/start.sh"]

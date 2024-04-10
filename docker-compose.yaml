@@ -66,7 +66,7 @@ services:
       - MAX_HEAP_SIZE_IN_GB=${MAX_HEAP_SIZE_IN_GB}
     volumes:
       - ./nzyme_node/nzyme.conf.template:/etc/nzyme/nzyme.conf.template
-      - ./nzyme_node/start.sh:/tmp/start.sh
+      - ./nzyme_node/start.sh:/etc/nzyme/start.sh
       - ./nzyme_node/node_id:/usr/share/nzyme/node_id
       - nzyme_node_keys:/usr/share/nzyme/crypto
 
