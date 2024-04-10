@@ -24,6 +24,5 @@ jobs:
         env:
           GITHUB_REPOSITORY_OWNER: ${{ github.repository_owner }}
         with:
-          targets: all_nzyme_nodes
           push: true
-          files: ./docker-bake.hcl
+          file: docker-bake.hcl
