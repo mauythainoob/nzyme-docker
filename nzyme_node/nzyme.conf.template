@@ -1,0 +1,42 @@
+# Configuration reference: https://go.nzyme.org/configuration-reference
+
+# General nzyme configuration.
+general: {
+  # The ID or name of this nzyme instance. Must be unique and contain only alphanumeric characters, underscores and dashes.
+  name: ${NZYME_NODE_NAME}
+
+  # Path to postgreSQL database. Make sure to change username, password and database name. (This is described in the documentation)
+  database_path: "postgresql://${POSTGRES_HOST}:${POSTGRES_PORT}/${NZYME_POSTGRES_DB}?user=${POSTGRES_USER}&password=${POSTGRES_PASSWORD}"
+
+  # Download current list of manufacturers and enable MAC address to manufacturer lookup?
+  fetch_ouis: true
+
+  # Path to directory that nzyme will use to store some temporary information. (must be writable)
+  data_directory: /usr/share/nzyme
+
+  # Path to nzyme plugin directory.
+  plugin_directory: /usr/share/nzyme/plugins
+
+  # Path to nzyme cryptographic key/certificate directory.
+  crypto_directory: /usr/share/nzyme/crypto
+
+  # Nzyme is using NTP to compare clocks to world reference time and alert you if there is time drift. Default: pool.ntp.org
+  ntp_server: pool.ntp.org
+
+  # Regularly check if this version of nzyme is outdated?
+  versionchecks: true
+}
+
+# Web interfacecat  and REST API configuration. A self-signed TLS certificate will be generated and you can upload your own.
+interfaces: {
+  # Make sure to set this to an IP address you can reach from your workstation. Must be https://.
+  rest_listen_uri: "${NZYME_URI}"
+
+  # This is usually the same as the `rest_listen_uri`. Take a look at the configuration documentation to learn about
+  # other use-cases. It will be interesting if you run behind a load balancer or NAT. (basically, it is the address
+  # that your web browser will use to try to connect to nzyme and it has to be reachable for it.) Must be https://.
+  http_external_uri: "${NZYME_URI}"
+}
+
+
+

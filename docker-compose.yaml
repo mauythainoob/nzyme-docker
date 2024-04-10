@@ -1,0 +1,75 @@
+services:
+  postgres:
+    image: postgres:14
+    restart: always
+    environment:
+      # Passing the db name automatically create it for us
+      - NZYME_POSTGRES_DB=${NZYME_POSTGRES_DB}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./postgres/init.sql:/docker-entrypoint-initdb.d/init.sql
+    network_mode: host
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER}"]
+      interval: 10s
+      retries: 5
+
+  nzyme_tap:
+    image: nzyme-tap:v2a12
+    network_mode: host
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 2GB
+        reservations:
+          cpus:  '0.25'
+          memory: 1GB
+    cap_add:
+      - NET_ADMIN
+    environment:
+      - TAP_SECRET_KEY=${TAP_SECRET_KEY}
+      - ACCEPT_INSECURE_CERTS=${ACCEPT_INSECURE_CERTS}
+      - TCP_PROTOCOL_PIPELINE_SIZE=${TCP_PROTOCOL_PIPELINE_SIZE}
+      - TCP_PROTOCOL_SESSION_TIMEOUT_IN_SECONDS=${TCP_PROTOCOL_SESSION_TIMEOUT_IN_SECONDS}
+      - LOG_LEVEL=${LOG_LEVEL}
+      - NZYME_URI=${NZYME_URI}
+    volumes:
+      - ./nzyme_tap/nzyme-tap.conf.template:/etc/nzyme/nzyme-tap.conf.template
+      - ./nzyme_tap/start.sh:/tmp/start.sh
+
+
+  nzyme_node:
+    image: nzyme-node:v2a12
+    network_mode: host
+    restart: on-failure
+    deploy:
+      resources:
+        limits:
+          cpus: '1'
+          memory: 4GB
+        reservations:
+          cpus:  '0.5'
+          memory: 2GB
+    environment:
+      - NZYME_POSTGRES_DB=${NZYME_POSTGRES_DB}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_PORT=${POSTGRES_PORT}
+      - POSTGRES_HOST=${POSTGRES_HOST}
+      - NZYME_PORT=${NZYME_PORT}
+      - NZYME_URI=${NZYME_URI}
+      - NZYME_NODE_NAME=${NZYME_NODE_NAME}
+      - INITIAL_HEAP_SIZE_IN_GB=${INITIAL_HEAP_SIZE_IN_GB}
+      - MAX_HEAP_SIZE_IN_GB=${MAX_HEAP_SIZE_IN_GB}
+    volumes:
+      - ./nzyme_node/nzyme.conf.template:/etc/nzyme/nzyme.conf.template
+      - ./nzyme_node/start.sh:/etc/nzyme/start.sh
+      - ./nzyme_node/node_id:/usr/share/nzyme/node_id
+      - nzyme_node_keys:/usr/share/nzyme/crypto
+
+volumes:
+  postgres_data:
+  nzyme_node_keys:

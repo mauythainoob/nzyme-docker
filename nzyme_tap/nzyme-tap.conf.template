@@ -1,0 +1,28 @@
+[general]
+leader_secret = "${TAP_SECRET_KEY}"
+leader_uri = "${NZYME_URI}"
+accept_insecure_certs = $ACCEPT_INSECURE_CERTS
+
+
+# Insert your interface details here... 
+# Example below
+[wifi_interfaces.wlx00c0ca9789fb]
+active = true
+channels_2g = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13]
+channels_5g = []
+channels_6g = []
+
+
+[performance]
+ethernet_brokers = 1
+wifi_brokers = 1
+wifi_broker_buffer_capacity = 65535
+ethernet_broker_buffer_capacity = 65535
+
+[protocols.tcp]
+pipeline_size = $TCP_PROTOCOL_PIPELINE_SIZE
+reassembly_buffer_size = 1048576
+session_timeout_seconds = $TCP_PROTOCOL_SESSION_TIMEOUT_IN_SECONDS
+
+[misc]
+training_period_minutes = 5
