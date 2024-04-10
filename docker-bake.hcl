@@ -1,3 +1,9 @@
+
+variable IMAGE_REGISTRY_PREFIX {
+    default = ""
+}
+
+
 group "all_nzyme_nodes" {
   targets = ["nzyme_node_v2a9", "nzyme_node_v2a10", "nzyme_node_v2a12"]
 }
@@ -5,6 +11,7 @@ group "all_nzyme_nodes" {
 group "all_nzyme_taps" {
   targets = ["nzyme_tap_v2a9", "nzyme_tap_v2a10", "nzyme_tap_v2a12"]
 }
+
 
 
 #
@@ -35,7 +42,7 @@ target "nzyme_node_v2a9" {
     args = {
         DOWNLOAD_TARGET = "https://github.com/nzymedefense/nzyme/releases/download/2.0.0-alpha.9/nzyme-node_2.0.0-alpha.9.deb"
     }
-    tags = ["${NZYME_NODE_DOCKER_IMAGE_NAME}:v2a9"]
+    tags = ["${IMAGE_REGISTRY_PREFIX}${NZYME_NODE_DOCKER_IMAGE_NAME}:v2a9"]
 }
 
 target "nzyme_node_v2a10" { 
@@ -43,7 +50,7 @@ target "nzyme_node_v2a10" {
     args = {
         DOWNLOAD_TARGET = "https://github.com/nzymedefense/nzyme/releases/download/2.0.0-alpha.10/nzyme-node_2.0.0-alpha.10.deb"
     }
-    tags = ["${NZYME_NODE_DOCKER_IMAGE_NAME}:v2a10"]
+    tags = ["${IMAGE_REGISTRY_PREFIX}${NZYME_NODE_DOCKER_IMAGE_NAME}:v2a10"]
 }
 
 target "nzyme_node_v2a12" { 
@@ -51,7 +58,7 @@ target "nzyme_node_v2a12" {
     args = {
         DOWNLOAD_TARGET = "https://github.com/nzymedefense/nzyme/releases/download/2.0.0-alpha.12/nzyme-node_2.0.0-alpha.12.deb"
     }
-    tags = ["${NZYME_NODE_DOCKER_IMAGE_NAME}:v2a12"]
+    tags = ["${IMAGE_REGISTRY_PREFIX}${NZYME_NODE_DOCKER_IMAGE_NAME}:v2a12"]
 }
 
 #
@@ -81,7 +88,7 @@ target "nzyme_tap_v2a9" {
     args = {
         DOWNLOAD_TARGET = "https://github.com/nzymedefense/nzyme/releases/download/2.0.0-alpha.9/nzyme-tap_2.0.0-alpha.9_ubuntu2204_amd64.deb"
     }
-    tags = ["${NZYME_TAP_DOCKER_IMAGE_NAME}:v2a9"]
+    tags = ["${IMAGE_REGISTRY_PREFIX}${NZYME_TAP_DOCKER_IMAGE_NAME}:v2a9"]
 }
 
 target "nzyme_tap_v2a10" { 
@@ -89,7 +96,7 @@ target "nzyme_tap_v2a10" {
     args = {
         DOWNLOAD_TARGET = "https://github.com/nzymedefense/nzyme/releases/download/2.0.0-alpha.10/nzyme-tap_2.0.0-alpha.10_ubuntu2204_amd64.deb"
     }
-    tags = ["${NZYME_TAP_DOCKER_IMAGE_NAME}:v2a10"]
+    tags = ["${IMAGE_REGISTRY_PREFIX}${NZYME_TAP_DOCKER_IMAGE_NAME}:v2a10"]
 }
 
 target "nzyme_tap_v2a12" { 
@@ -97,5 +104,5 @@ target "nzyme_tap_v2a12" {
     args = {
         DOWNLOAD_TARGET = "https://github.com/nzymedefense/nzyme/releases/download/2.0.0-alpha.12/nzyme-tap_2.0.0-alpha.12_ubuntu2204_amd64.deb"
     }
-    tags = ["${NZYME_TAP_DOCKER_IMAGE_NAME}:v2a12"]
+    tags = ["${IMAGE_REGISTRY_PREFIX}${NZYME_TAP_DOCKER_IMAGE_NAME}:v2a12"]
 }
