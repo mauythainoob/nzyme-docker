@@ -26,7 +26,6 @@ target "_nzyme_node" {
         # What you'll need to update
         DOWNLOAD_TARGET = ""
     }
-    ssh = ["default"]
     platforms  = ["linux/amd64"]
     
 }
@@ -73,7 +72,6 @@ target "_nzyme_tap" {
         # What you'll need to update
         DOWNLOAD_TARGET = ""
     }
-    ssh = ["default"]
     platforms  = ["linux/amd64"]
     tags = ["nzyme-tap:latest"]
 }
