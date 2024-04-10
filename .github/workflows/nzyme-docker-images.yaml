@@ -1,4 +1,4 @@
-name: Nzyme docker images
+name: Nzyme Docker images
 
 on:
   push:
