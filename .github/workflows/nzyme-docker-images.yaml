@@ -26,4 +26,4 @@ jobs:
         with:
           targets: all_nzyme_nodes
           push: true
-          files: docker-bake.hcl
+          files: ./docker-bake.hcl
