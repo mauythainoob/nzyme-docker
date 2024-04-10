@@ -22,7 +22,7 @@ jobs:
         uses: docker/bake-action@v4
         env:
           GITHUB_REPOSITORY_OWNER: ${{ github.repository_owner }}
-          IMAGE_REGISTRY_PREFIX: $${{ variables.IMAGE_REGISTRY_PREFIX }}
+          IMAGE_REGISTRY_PREFIX: $${{ vars.IMAGE_REGISTRY_PREFIX }}
         with:
           source: "${{ github.server_url }}/${{ github.repository }}.git#${{ github.ref }}"
           push: true
