@@ -9,4 +9,6 @@ echo "---------- Starting nzyme tap -----------"
 config_file=/etc/nzyme/nzyme-tap.conf
 envsubst < /etc/nzyme/nzyme-tap.conf.template > $config_file
 
+cat $config_file
+
 /usr/bin/nzyme-tap --configuration-file $config_file --log-level $LOG_LEVEL

@@ -15,14 +15,8 @@ RUN apt update && \
     apt install -y \
         curl \ 
         openjdk-11-jre-headless \ 
-        postgresql-client \
-        wireless-tools \ 
-        procps \
-        usbutils \
         libpcap0.8 \ 
         gettext \
-        moreutils \
-        iproute2 \
         iw && \
     curl -L ${DOWNLOAD_TARGET} > ${NZYME_DEB_FILE} && \ 
     dpkg -i ${NZYME_DEB_FILE} && \

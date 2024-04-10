@@ -14,11 +14,8 @@ RUN apt update && \
     apt install -y \ 
         curl \ 
         openjdk-11-jre-headless \ 
-        postgresql-client wireless-tools \ 
-        procps \ 
-        usbutils \ 
-        gettext \
-        moreutils && \
+        postgresql-client \
+        gettext && \
     curl -L ${DOWNLOAD_TARGET} > ${NZYME_DEB_FILE} && \ 
     dpkg -i ${NZYME_DEB_FILE} && \
     # remove file as tmp uses memory and deleting the file frees up image size
