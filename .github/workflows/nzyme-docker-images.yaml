@@ -25,6 +25,6 @@ jobs:
           IMAGE_REGISTRY_PREFIX: ${{ secrets.IMAGE_REGISTRY_PREFIX }}
         with:
           push: true
-          targets: v2a12
+          targets: nzyme_tap_v2a12
           files: |
             ./docker-bake.hcl
