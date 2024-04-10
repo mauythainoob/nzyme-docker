@@ -24,7 +24,6 @@ jobs:
           GITHUB_REPOSITORY_OWNER: ${{ github.repository_owner }}
           IMAGE_REGISTRY_PREFIX: ${{ secrets.IMAGE_REGISTRY_PREFIX }}
         with:
-          source: "${{ github.server_url }}/${{ github.repository }}.git#${{ github.ref }}"
           push: true
           targets: v2a12
           files: |
