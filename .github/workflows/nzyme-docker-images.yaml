@@ -25,4 +25,5 @@ jobs:
           GITHUB_REPOSITORY_OWNER: ${{ github.repository_owner }}
         with:
           push: true
-          file: docker-bake.hcl
+          files: |
+            ./docker-bake.hcl
