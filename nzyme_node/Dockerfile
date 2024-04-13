@@ -9,6 +9,7 @@ ARG NZYME_DEB_FILE=/tmp/nzyme_node_install.deb
 # Do this otherwise 'apt install' hangs
 ENV DEBIAN_FRONTEND=noninteractive 
 
+# Setup
 WORKDIR /tmp
 RUN apt update && \ 
     apt install -y \ 
@@ -21,6 +22,7 @@ RUN apt update && \
     # remove file as tmp uses memory and deleting the file frees up image size
     rm ${NZYME_DEB_FILE}
 
+# Create nzyme user and change all relvant files to be owned by nzyme 
 RUN useradd -m nzyme && \
     chown -R nzyme:nzyme /etc/default/nzyme && \
     chmod -R 700 /etc/default/nzyme && \
@@ -33,7 +35,11 @@ RUN useradd -m nzyme && \
     chown -R nzyme:nzyme /var/log/nzyme/ && \
     chmod -R 700 /var/log/nzyme/
 
+# Uninstall stuff we no longer need
+RUN apt purge -y curl && \
+    apt clean 
+
 USER nzyme
-WORKDIR /
+WORKDIR /etc/nzyme
 EXPOSE ${PORT}
 CMD ["sh", "/etc/nzyme/start.sh"]

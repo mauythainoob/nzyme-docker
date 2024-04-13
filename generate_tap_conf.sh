@@ -17,5 +17,5 @@ if [ $? -eq 1 ]; then
     exit 1
 fi
 
-docker run --network host --rm $docker_image_name:$docker_image_tag /usr/bin/nzyme-tap --generate-channels
+docker run --network host --cap-add=NET_ADMIN --rm $docker_image_name:$docker_image_tag /usr/bin/nzyme-tap --generate-channels
 
