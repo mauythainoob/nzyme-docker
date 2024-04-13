@@ -38,7 +38,7 @@ services:
       - NZYME_URI=${NZYME_URI}
     volumes:
       - ./nzyme_tap/nzyme-tap.conf.template:/etc/nzyme/nzyme-tap.conf.template
-      - ./nzyme_tap/start.sh:/tmp/start.sh
+      - ./nzyme_tap/start.sh:/etc/nzyme/start.sh
 
 
   nzyme_node:
@@ -68,7 +68,7 @@ services:
       - ./nzyme_node/nzyme.conf.template:/etc/nzyme/nzyme.conf.template
       - ./nzyme_node/start.sh:/etc/nzyme/start.sh
       - ./nzyme_node/node_id:/usr/share/nzyme/node_id
-      - nzyme_node_keys:/usr/share/nzyme/crypto
+      - nzyme_node_keys:/usr/share/nzyme/crypto:rw
 
 volumes:
   postgres_data:

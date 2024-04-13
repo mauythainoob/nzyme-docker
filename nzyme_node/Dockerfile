@@ -20,7 +20,20 @@ RUN apt update && \
     dpkg -i ${NZYME_DEB_FILE} && \
     # remove file as tmp uses memory and deleting the file frees up image size
     rm ${NZYME_DEB_FILE}
- 
+
+RUN useradd -m nzyme && \
+    chown -R nzyme:nzyme /etc/default/nzyme && \
+    chmod -R 700 /etc/default/nzyme && \
+    chown -R nzyme:nzyme /etc/nzyme/ && \
+    chmod -R 700 /etc/nzyme/ && \
+    chown -R nzyme:nzyme /etc/nzyme/ && \
+    chmod -R 700 /etc/nzyme/ && \
+    chown -R nzyme:nzyme /usr/share/nzyme && \
+    chmod -R 700 /usr/share/nzyme && \
+    chown -R nzyme:nzyme /var/log/nzyme/ && \
+    chmod -R 700 /var/log/nzyme/
+
+USER nzyme
 WORKDIR /
 EXPOSE ${PORT}
 CMD ["sh", "/etc/nzyme/start.sh"]
