@@ -2,6 +2,11 @@ services:
   postgres:
     image: postgres:14
     restart: always
+    deploy:
+      resources:
+        limits:
+          cpus: '1'
+          memory: 4GB
     environment:
       # Passing the db name automatically create it for us
       - NZYME_POSTGRES_DB=${NZYME_POSTGRES_DB}
@@ -24,9 +29,6 @@ services:
         limits:
           cpus: '0.5'
           memory: 2GB
-        reservations:
-          cpus:  '0.25'
-          memory: 1GB
     cap_add:
       - NET_ADMIN
     environment:
@@ -50,9 +52,6 @@ services:
         limits:
           cpus: '1'
           memory: 4GB
-        reservations:
-          cpus:  '0.5'
-          memory: 2GB
     environment:
       - NZYME_POSTGRES_DB=${NZYME_POSTGRES_DB}
       - POSTGRES_USER=${POSTGRES_USER}
