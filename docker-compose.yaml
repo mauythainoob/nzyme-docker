@@ -68,7 +68,7 @@ services:
       - ./nzyme_node/nzyme.conf.template:/etc/nzyme/nzyme.conf.template
       - ./nzyme_node/start.sh:/etc/nzyme/start.sh
       - ./nzyme_node/node_id:/usr/share/nzyme/node_id
-      - nzyme_node_keys:/usr/share/nzyme/crypto:rw
+      - nzyme_node_keys:/usr/share/nzyme/crypto
 
 volumes:
   postgres_data:
